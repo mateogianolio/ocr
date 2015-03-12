@@ -5,7 +5,7 @@
       _ = require('underscore'),
       fs = require('fs');
   
-  var chars = 10,
+  var chars = 26,
       size = 16,
       threshold = 250;
   
@@ -15,13 +15,13 @@
       text,
       n;
   
-  log('generating captchas to input/ ...');
+  log('generating images to input/ ...');
   for(n = 0; n < samples; n++) {
-    text = _.sample('abcdefghijklmnopqrstuvxyz'.split(''), chars);
+    text = _.sample('abcdefghijklmnopqrstuvwxyz'.split(''), chars).join('');
     captcha({
       size: chars,
       height: size,
-      text: text.join(''),
+      text: text,
       noise: false
     }, generate(n));
   }
@@ -66,6 +66,41 @@
             pixel = [];
           }
         }
+        
+        // center of mass calculation
+        var mass = 0,
+            sum = {
+              x: 0,
+              y: 0
+            };
+        for(y = 0; y < size; y++) {
+          for(x = 0; x < size; x++) {
+            if(chunk[size * y + x]) {
+              sum.x += x;
+              sum.y += y;
+              mass++;
+            }
+          }
+        }
+        
+        // diff from center of mass to center of image
+        var diff = {
+          x: (size / 2) - Math.round(sum.x / mass),
+          y: (size / 2) - Math.round(sum.y / mass)
+        };
+        
+        // length before move
+        var len = chunk.length;
+        
+        // move center of mass to center of image
+        for(y = 0; y < size; y++) {
+          for(x = 0; x < size; x++) {
+            if(chunk[size * y + x]) {
+              chunk[size * (y + diff.y) + (x + diff.x)] = chunk[size * y + x];
+              chunk[size * y + x] = 0;
+            }
+          }
+        }
 
         chunks.push({
           character: text.charCodeAt(i),
@@ -96,11 +131,20 @@
   // train network
   function train() {
     var perceptron = new synaptic.Architect.Perceptron(size * size, size, 8);
-    var rate = .015,
+    var rate = size / (size * size),
         length = set.length,
         object;
     
-    log('learning from', samples, 'captchas, containing', length, 'characters ...');
+    log('neural network specs:');
+    log('  layers:');
+    log('    input:', (size * size), 'neurons.');
+    log('    hidden:', size, 'neurons.');
+    log('    output:', 8, 'neurons.');
+    log('  learning rate:', rate);
+    log('  training set:', samples, 'images containing', length, 'distorted letters.');
+    log();
+    
+    log('learning ...');
     
     var i, j;
     for(i = 0; i < length; i++) {
@@ -109,10 +153,8 @@
       if(i > 0 && !(i % (length / 10)))
         log('progress:', Math.round(100 * (i / length)) + '%');
       
-      for(j = 0; j < 10; j++) {
-        perceptron.activate(object.input);
-        perceptron.propagate(rate, object.output);
-      }
+      perceptron.activate(object.input);
+      perceptron.propagate(rate, object.output);
     }
     
     log('... done');
@@ -124,7 +166,9 @@
   // network is trained and ready to use
   function done(network) {
     fs.writeFileSync('./network.js', 'module.exports.activate = ' + network.standalone().toString());
+    
     log('network saved to ./network.js');
+    log();
     
     var input,
         output,
@@ -132,7 +176,7 @@
         result,
         r;
     
-    var samples = 100000,
+    var samples = 10000,
         success = 0,
         i;
     
