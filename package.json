@@ -13,6 +13,9 @@
   "author": "Mateo Gianolio",
   "license": "MIT",
   "dependencies": {
-    "dnn": "^0.1.0"
+    "node-captcha": "^0.2.1",
+    "pngjs": "^0.4.0",
+    "synaptic": "^0.1.7",
+    "underscore": "^1.8.2"
   }
 }
