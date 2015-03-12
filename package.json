@@ -1,21 +1,16 @@
 {
-  "name": "deep-learning",
+  "name": "mlp-character-recognition",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "deep",
-    "learning"
-  ],
   "author": "Mateo Gianolio",
   "license": "MIT",
   "dependencies": {
     "node-captcha": "^0.2.1",
     "pngjs": "^0.4.0",
-    "synaptic": "^0.1.7",
-    "underscore": "^1.8.2"
+    "synaptic": "^0.1.7"
   }
 }

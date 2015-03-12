@@ -2,22 +2,21 @@
   var synaptic = require('synaptic'),
       captcha = require('node-captcha'),
       png = require('pngjs').PNG,
-      _ = require('underscore'),
       fs = require('fs');
   
-  var chars = 50,
+  var chars = 10,
       size = 16,
-      threshold = 250;
+      threshold = 400;
   
   var set = [];
   
-  var samples = 1000,
+  var samples = 2000,
       text,
       n;
   
   log('generating images to input/ ...');
   for(n = 0; n < samples; n++) {
-    text = _.sample('01233456789'.split(''), chars).join('');
+    text = '0123456789';
     captcha({
       size: chars,
       height: size,
