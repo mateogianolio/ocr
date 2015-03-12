@@ -5,19 +5,19 @@
       _ = require('underscore'),
       fs = require('fs');
   
-  var chars = 26,
+  var chars = 50,
       size = 16,
       threshold = 250;
   
   var set = [];
   
-  var samples = 2500,
+  var samples = 1000,
       text,
       n;
   
   log('generating images to input/ ...');
   for(n = 0; n < samples; n++) {
-    text = _.sample('abcdefghijklmnopqrstuvwxyz'.split(''), chars).join('');
+    text = _.sample('01233456789'.split(''), chars).join('');
     captcha({
       size: chars,
       height: size,
@@ -130,18 +130,22 @@
   
   // train network
   function train() {
-    var perceptron = new synaptic.Architect.Perceptron(size * size, size, 8);
-    var rate = size / (size * size),
+    var input = size * size,
+        hidden = size,
+        output = 8;
+    
+    var perceptron = new synaptic.Architect.Perceptron(input, hidden, output);
+    var rate = hidden / input,
         length = set.length,
         object;
     
     log('neural network specs:');
     log('  layers:');
-    log('    input:', (size * size), 'neurons.');
-    log('    hidden:', size, 'neurons.');
-    log('    output:', 8, 'neurons.');
+    log('    input:', input, 'neurons.');
+    log('    hidden:', hidden, 'neurons.');
+    log('    output:', output, 'neurons.');
     log('  learning rate:', rate);
-    log('  training set:', samples, 'images containing', length, 'distorted letters.');
+    log('  training set:', samples, 'images containing', length, 'distorted characters.');
     log();
     
     log('learning ...');
@@ -149,6 +153,9 @@
     var i, j;
     for(i = 0; i < length; i++) {
       object = set[i];
+      
+      if(object.input.length !== input)
+        continue;
       
       if(i > 0 && !(i % (length / 10)))
         log('progress:', Math.round(100 * (i / length)) + '%');
