@@ -6,9 +6,11 @@ The script moves each character to the center of the 256-bit (16x16) network inp
 
 Currently the MLP has a success rate of ```~70%``` on numbers ```0-9``` and a success rate of ```~50%``` on letters ```a-z```.
 
-Below is an example of an input image from the training set.
+Below are examples of input images from training sets generated for recognition of numbers 0-9 and letters a-z respectively.
 
 ![0-9](https://raw.github.com/mateogianolio/mlp-character-recognition/master/examples/0-9.png)
+
+![a-z](https://raw.github.com/mateogianolio/mlp-character-recognition/master/examples/a-z.png)
 
 ## Usage
 

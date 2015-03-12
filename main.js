@@ -4,7 +4,7 @@
       png = require('pngjs').PNG,
       fs = require('fs');
   
-  var chars = 10,
+  var chars = 26,
       size = 16,
       threshold = 400;
   
@@ -16,7 +16,7 @@
   
   log('generating images to input/ ...');
   for(n = 0; n < samples; n++) {
-    text = '0123456789';
+    text = 'abcdefghijklmnopqrstuvwxyz';
     captcha({
       size: chars,
       height: size,
