@@ -4,44 +4,45 @@
       png = require('pngjs').PNG,
       fs = require('fs');
   
-  var chars = 26,
-      size = 16,
-      threshold = 400;
+  var text = '01234567890123456789',
+      chars = text.length;
   
   var set = [];
   
-  var samples = 2000,
-      text,
+  var threshold = 300,
+      samples = 2000,
+      size = 20,
       n;
   
   log('generating images to input/ ...');
   for(n = 0; n < samples; n++) {
-    text = 'abcdefghijklmnopqrstuvwxyz';
     captcha({
       size: chars,
       height: size,
       text: text,
-      noise: false
+      noise: false,
+      fileMode: 2
     }, generate(n));
   }
   
   // captcha callback
   function generate(n) {
     return function(text, data) {
-      data = data.split(',').pop();
-
-      fs.writeFileSync('./input/' + n + '.png', data, 'base64');
-      fs.createReadStream('./input/' + n + '.png')
-        .pipe(new png({
-          filterType: 4
-        }))
-        .on('parsed', parse(text, n));
+      var PNG = new png({
+        filterType: 4
+      });
+      
+      PNG.parse(data, parse(text, n));
+      //fs.writeFileSync('./input/' + n + '.png', data, 'base64');
     };
   }
   
   // 'parsed' event callback
   function parse(text, n) {
-    return function() {
+    return function(error, data) {
+      if(error)
+        throw error;
+      
       var index,
           i, j,
           x, y;
@@ -50,12 +51,12 @@
           chunk = [],
           pixel = [];
       for(i = 0; i < chars; i++) {
-        for(y = 0; y < this.height; y++) {
+        for(y = 0; y < data.height; y++) {
           for(x = i * size; x < (i * size + size); x++) {
-            index = (this.width * y + x) << 2;
+            index = (data.width * y + x) << 2;
 
             for(j = 0; j < 3; j++)
-              pixel.push(this.data[index + j]);
+              pixel.push(data.data[index + j]);
 
             chunk.push(
               pixel.reduce(function(previous, current) {
@@ -130,7 +131,7 @@
   // train network
   function train() {
     var input = size * size,
-        hidden = size,
+        hidden = size * 2,
         output = 8;
     
     var perceptron = new synaptic.Architect.Perceptron(input, hidden, output);
