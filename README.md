@@ -52,6 +52,52 @@ $ npm install
 $ node main.js
 ```
 
+## Example
+
+Here is an example run of the script:
+
+```bash
+$ node main.js
+generating images ...
+... done
+
+neural network specs:
+  layers:
+    input: 400 neurons.
+    hidden: 40 neurons.
+    output: 8 neurons.
+  learning rate: 0.1
+  training set: 52000 distorted characters.
+
+learning ...
+progress: 10%
+progress: 20%
+progress: 30%
+progress: 40%
+progress: 50%
+progress: 60%
+progress: 70%
+progress: 80%
+progress: 90%
+... done
+
+network saved to ./network.js
+
+testing on 10000 random input samples ...
+progress: 10%
+progress: 20%
+progress: 30%
+progress: 40%
+progress: 50%
+progress: 60%
+progress: 70%
+progress: 80%
+progress: 90%
+... done
+
+success rate: 98.52 %
+```
+
 ## Contribute
 
 Feel free to fork and submit pull requests.
