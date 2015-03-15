@@ -9,7 +9,7 @@
   "author": "Mateo Gianolio",
   "license": "MIT",
   "dependencies": {
-    "node-captcha": "^0.2.1",
+    "canvas": "^1.2.1",
     "pngjs": "^0.4.0",
     "synaptic": "^0.1.7"
   }

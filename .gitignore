@@ -24,9 +24,7 @@ build/Release
 
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
-node_modules/pngjs
-node_modules/synaptic
-node_modules/underscore
+node_modules
 
 # Inputs
 input/*.png

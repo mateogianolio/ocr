@@ -1,29 +1,26 @@
 (function(log) {
   var synaptic = require('synaptic'),
-      captcha = require('node-captcha'),
+      captcha = require('./captcha.js'),
       png = require('pngjs').PNG,
       fs = require('fs');
   
-  var text = '01234567890123456789',
+  var text = '0123456789',
       chars = text.length;
   
   var set = [];
   
-  var threshold = 300,
+  var threshold = 400,
       samples = 2000,
       size = 20,
-      n;
+      n; // index to keep track of callbacks
   
-  log('generating images to input/ ...');
-  for(n = 0; n < samples; n++) {
-    captcha({
+  log('generating images ...');
+  for(n = 0; n < samples; n++)
+    captcha.generate({
       size: chars,
       height: size,
-      text: text,
-      noise: false,
-      fileMode: 2
+      text: text
     }, generate(n));
-  }
   
   // captcha callback
   function generate(n) {
@@ -33,7 +30,6 @@
       });
       
       PNG.parse(data, parse(text, n));
-      //fs.writeFileSync('./input/' + n + '.png', data, 'base64');
     };
   }
   
@@ -44,11 +40,10 @@
         throw error;
       
       var index,
-          i, j,
+          i, j, k,
           x, y;
 
-      var chunks = [],
-          chunk = [],
+      var chunk = [],
           pixel = [];
       for(i = 0; i < chars; i++) {
         for(y = 0; y < data.height; y++) {
@@ -67,65 +62,73 @@
           }
         }
         
-        // center of mass calculation
-        var mass = 0,
-            sum = {
-              x: 0,
-              y: 0
-            };
-        for(y = 0; y < size; y++) {
-          for(x = 0; x < size; x++) {
-            if(chunk[size * y + x]) {
-              sum.x += x;
-              sum.y += y;
-              mass++;
-            }
-          }
-        }
+        chunk = center(chunk);
         
-        // diff from center of mass to center of image
-        var diff = {
-          x: (size / 2) - Math.round(sum.x / mass),
-          y: (size / 2) - Math.round(sum.y / mass)
-        };
-        
-        // length before move
-        var len = chunk.length;
-        
-        // move center of mass to center of image
-        for(y = 0; y < size; y++) {
-          for(x = 0; x < size; x++) {
-            if(chunk[size * y + x]) {
-              chunk[size * (y + diff.y) + (x + diff.x)] = chunk[size * y + x];
-              chunk[size * y + x] = 0;
-            }
-          }
-        }
-
-        chunks.push({
-          character: text.charCodeAt(i),
-          chunk: chunk
-        });
-        chunk = [];
-      };
-
-      while(chunks.length) {
-        chunk = chunks.pop();
-
         set.push({
-          input: chunk.chunk,
-          output: ('00000000' + chunk.character.toString(2)).substr(-8).split('').map(Number)
+          input: chunk,
+          output: ('00000000' + text.charCodeAt(i).toString(2)).substr(-8).split('').map(Number)
         });
+        
+        chunk = [];
       }
-      
-      chunks = [];
       
       if(n === samples - 1) {
         log('... done');
         log();
+        
         train();
       }
     };
+  }
+  
+  function center(chunk) {
+    var min = {
+      x: size,
+      y: size
+    };
+    var max = {
+      x: 0,
+      y: 0
+    };
+
+    for(y = 0; y < size; y++) {
+      for(x = 0; x < size; x++) {
+        if(chunk[size * y + x]) {
+          if(min.x > x)
+            min.x = x;
+
+          if(min.y > y)
+            min.y = y;
+
+          if(max.x < x)
+            max.x = x;
+
+          if(max.y < y)
+            max.y = y;
+        }
+      }
+    }
+
+    var diff = {
+      x: Math.floor((size / 2) - (min.x + (max.x - min.x) / 2)),
+      y: Math.floor((size / 2) - (min.y + (max.y - min.y) / 2))
+    };
+
+    // fill array with size * size zeros
+    var clone = Array.apply(null, new Array(size * size)).map(Number.prototype.valueOf, 0);
+
+    // move character to center
+    for(y = 0; y < size; y++) {
+      for(x = 0; x < size; x++) {
+        j = size * y + x;
+        k = size * (y + diff.y) + (x + diff.x);
+
+        if(chunk[j])
+          clone[k] = chunk[j];
+      }
+    }
+    
+    return clone;
   }
   
   // train network
@@ -145,7 +148,7 @@
     log('    hidden:', hidden, 'neurons.');
     log('    output:', output, 'neurons.');
     log('  learning rate:', rate);
-    log('  training set:', samples, 'images containing', length, 'distorted characters.');
+    log('  training set:', length, 'distorted characters.');
     log();
     
     log('learning ...');
@@ -153,9 +156,6 @@
     var i, j;
     for(i = 0; i < length; i++) {
       object = set[i];
-      
-      if(object.input.length !== input)
-        continue;
       
       if(i > 0 && !(i % (length / 10)))
         log('progress:', Math.round(100 * (i / length)) + '%');
