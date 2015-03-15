@@ -22,7 +22,7 @@ var output = network.activate(input);
   * **Neurons:** (```400``` input, ```40``` hidden, ```8``` output)
   * **Learning rate:** ```0.1```
   * **Training set:**
-    * **Size:** ```52000``` characters
+    * **Size:** ```52000``` distorted characters
     * **Sample:** ![abcdefghijklmnopqrstuvwxyz](https://raw.github.com/mateogianolio/mlp-character-recognition/master/examples/abcdefghijklmnopqrstuvwxyz.png)
   * **Measured success rate:** ```98.52%``` (of 10000 random inputs from training set)
     
@@ -33,7 +33,7 @@ var output = network.activate(input);
   * **Neurons:** (```400``` input, ```40``` hidden, ```8``` output)
   * **Learning rate:** ```0.1```
   * **Training set:**
-    * **Size:** ```20000``` characters
+    * **Size:** ```20000``` distorted characters
     * **Sample:** ![0123456789](https://raw.github.com/mateogianolio/mlp-character-recognition/master/examples/0123456789.png)
 * **Measured success rate:** ```99.79%``` (of 10000 random inputs from training set)
 
