@@ -102,6 +102,7 @@ success rate: 98.52 %
 
 * Add customizability (fonts, optional distortion, MLP specs, threshold etc.)
 * Add training based on target success rate
+* Add separate testing set to avoid possible bias
 
 ## Contribute
 
