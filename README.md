@@ -98,6 +98,11 @@ progress: 90%
 success rate: 98.52 %
 ```
 
+## Todo
+
+* Add customizability (fonts, optional distortion, MLP specs, threshold etc.)
+* Add training based on target success rate
+
 ## Contribute
 
 Feel free to fork and submit pull requests.
