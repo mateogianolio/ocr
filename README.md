@@ -4,7 +4,7 @@ Trains a multi-layer perceptron (MLP) neural network to perform optical characte
 
 The training set is automatically generated using a highly modified version of the captcha-generator [node-captcha](http://npmjs.com/package/node-captcha).
 
-The network takes a 40x40-bit (400-bit) one-dimensional binary array as input and outputs an 8-bit binary array, which can then be converted into a character code. Initial performance measurements show very promising success rates.
+The network takes a 20x20-bit (400-bit) one-dimensional binary array as input and outputs an 8-bit binary array, which can then be converted into a character code. Initial performance measurements show very promising success rates.
 
 ## Performance
 
