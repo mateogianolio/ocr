@@ -4,7 +4,14 @@ Trains a multi-layer perceptron (MLP) neural network to perform optical characte
 
 The training set is automatically generated using a highly modified version of the captcha-generator [node-captcha](http://npmjs.com/package/node-captcha).
 
-The network takes a 20x20-bit (400-bit) one-dimensional binary array as input and outputs an 8-bit binary array, which can then be converted into a character code. Initial performance measurements show very promising success rates.
+The network takes a 20x20-bit (400-bit) one-dimensional binary array as input and outputs an 8-bit binary array, which can then be converted into a character code. Initial performance measurements show promising success rates.
+
+After training, the network is saved as a standalone module to ```./network.js```, which can then be used in your project with
+
+```javascript
+var network = require('./network.js');
+var output = network.activate(input);
+```
 
 ## Performance
 
@@ -17,7 +24,7 @@ The network takes a 20x20-bit (400-bit) one-dimensional binary array as input an
   * **Training set:**
     * **Size:** ```52000``` characters
     * **Sample:** ![abcdefghijklmnopqrstuvwxyz](https://raw.github.com/mateogianolio/mlp-character-recognition/master/examples/abcdefghijklmnopqrstuvwxyz.png)
-  * **Success rate:** ```98.52%```
+  * **Measured success rate:** ```98.52%``` (of 10000 random inputs from training set)
     
 ### 0123456789
 
@@ -28,7 +35,7 @@ The network takes a 20x20-bit (400-bit) one-dimensional binary array as input an
   * **Training set:**
     * **Size:** ```20000``` characters
     * **Sample:** ![0123456789](https://raw.github.com/mateogianolio/mlp-character-recognition/master/examples/0123456789.png)
-* **Success rate:** ```99.79%```
+* **Measured success rate:** ```99.79%``` (of 10000 random inputs from training set)
 
 ## Usage
 
