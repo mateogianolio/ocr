@@ -24,7 +24,7 @@ var output = network.activate(input);
   * **Training set:**
     * **Size:** ```52000``` distorted characters
     * **Sample:** ![abcdefghijklmnopqrstuvwxyz](https://raw.github.com/mateogianolio/mlp-character-recognition/master/examples/abcdefghijklmnopqrstuvwxyz.png)
-  * **Measured success rate:** ```98.52%``` (of 10000 random inputs from training set)
+* **Measured success rate:** ```98.52%``` (of 10000 random inputs from training set)
     
 ### 0123456789
 
