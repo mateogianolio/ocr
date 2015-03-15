@@ -22,9 +22,11 @@ var output = network.activate(input);
   * **Neurons:** (```400``` input, ```40``` hidden, ```8``` output)
   * **Learning rate:** ```0.1```
   * **Training set:**
-    * **Size:** ```52000``` distorted characters
+    * **Size:** ```52000``` characters
     * **Sample:** ![abcdefghijklmnopqrstuvwxyz](https://raw.github.com/mateogianolio/mlp-character-recognition/master/examples/abcdefghijklmnopqrstuvwxyz.png)
-* **Measured success rate:** ```98.52%``` (of 10000 random inputs from training set)
+  * **Testing set:**
+    * **Size:** ```52000``` characters
+* **Measured success rate:** ```98.52884615384615%``` (of 52000 inputs from testing set)
     
 ### 0123456789
 
@@ -33,9 +35,11 @@ var output = network.activate(input);
   * **Neurons:** (```400``` input, ```40``` hidden, ```8``` output)
   * **Learning rate:** ```0.1```
   * **Training set:**
-    * **Size:** ```20000``` distorted characters
+    * **Size:** ```20000``` characters
     * **Sample:** ![0123456789](https://raw.github.com/mateogianolio/mlp-character-recognition/master/examples/0123456789.png)
-* **Measured success rate:** ```99.79%``` (of 10000 random inputs from training set)
+  * **Testing set:**
+    * **Size:** ```20000``` characters
+* **Measured success rate:** ```99.66%``` (of 20000 inputs from testing set)
 
 ## Usage
 
@@ -67,7 +71,8 @@ neural network specs:
     hidden: 40 neurons.
     output: 8 neurons.
   learning rate: 0.1
-  training set: 52000 distorted characters.
+  training set: 52000 characters.
+  testing set: 52000 characters.
 
 learning ...
 progress: 10%
@@ -83,7 +88,7 @@ progress: 90%
 
 network saved to ./network.js
 
-testing on 10000 random input samples ...
+testing on 52000  samples ...
 progress: 10%
 progress: 20%
 progress: 30%
@@ -95,14 +100,13 @@ progress: 80%
 progress: 90%
 ... done
 
-success rate: 98.52 %
+success rate: 98.52884615384615 %
 ```
 
 ## Todo
 
 * Add customizability (fonts, optional distortion, MLP specs, threshold etc.)
 * Add training based on target success rate
-* Add separate testing set to avoid possible bias
 
 ## Contribute
 

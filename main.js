@@ -4,13 +4,16 @@
       png = require('pngjs').PNG,
       fs = require('fs');
   
-  var text = 'abcdefghijklmnopqrstuvwxyz',
+  var text = '0123456789',
       chars = text.length;
   
-  var set = [];
+  var sets = {
+    training: [],
+    testing: []
+  };
   
   var threshold = 400,
-      samples = 2000,
+      samples = 4000,
       size = 20,
       n; // index to keep track of callbacks
   
@@ -66,10 +69,17 @@
         
         chunk = center(chunk);
         
-        set.push({
-          input: chunk,
-          output: ('00000000' + text.charCodeAt(i).toString(2)).substr(-8).split('').map(Number)
-        });
+        if(n <= Math.round(samples / 2) - 1) {
+          sets.training.push({
+            input: chunk,
+            output: ('00000000' + text.charCodeAt(i).toString(2)).substr(-8).split('').map(Number)
+          });
+        } else {
+          sets.testing.push({
+            input: chunk,
+            output: ('00000000' + text.charCodeAt(i).toString(2)).substr(-8).split('').map(Number)
+          });
+        }
         
         chunk = [];
       }
@@ -141,7 +151,7 @@
     
     var perceptron = new synaptic.Architect.Perceptron(input, hidden, output);
     var rate = hidden / input,
-        length = set.length,
+        length = sets.training.length,
         object;
     
     log('neural network specs:');
@@ -150,16 +160,17 @@
     log('    hidden:', hidden, 'neurons.');
     log('    output:', output, 'neurons.');
     log('  learning rate:', rate);
-    log('  training set:', length, 'distorted characters.');
+    log('  training set:', length, 'characters.');
+    log('  testing set:', sets.testing.length, 'characters.');
     log();
     
     log('learning ...');
     
-    var i, j;
+    var i;
     for(i = 0; i < length; i++) {
-      object = set[i];
+      object = sets.training[i];
       
-      if(i > 0 && !(i % (length / 10)))
+      if(i > 0 && !(i % Math.round(length / 10)))
         log('progress:', Math.round(100 * (i / length)) + '%');
       
       perceptron.activate(object.input);
@@ -179,25 +190,26 @@
     log('network saved to ./network.js');
     log();
     
-    var input,
+    var object,
+        input,
         output,
         prediction,
-        result,
-        r;
+        result;
     
-    var samples = 10000,
+    var length = sets.testing.length,
         success = 0,
         i;
     
     // test on random inputs
-    log('testing on', samples, 'random input samples ...');
-    for(i = 0; i < samples; i++) {
-      if(i > 0 && !(i % (samples / 10)))
-        log('progress:', Math.round(100 * (i / samples)) + '%');
+    log('testing on', length, 'samples ...');
+    for(i = 0; i < length; i++) {
+      object = sets.testing[i];
       
-      r = Math.floor(Math.random() * set.length);
-      input = set[r].input;
-      output = set[r].output;
+      if(i > 0 && !(i % Math.round(length / 10)))
+        log('progress:', Math.round(100 * (i / length)) + '%');
+      
+      input = object.input;
+      output = object.output;
 
       prediction = network
         .activate(input)
@@ -215,6 +227,6 @@
     
     log('... done');
     log();
-    log('success rate:', (100 * (success / samples)), '%');
+    log('success rate:', (100 * (success / length)), '%');
   }
 })(console.log);
