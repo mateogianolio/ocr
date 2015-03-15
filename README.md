@@ -6,26 +6,22 @@ The script moves each character to the center of the 400-bit (20x20) network inp
 
 Below are examples of input images from training sets generated for recognition of numbers ```0-9``` and letters ```a-z``` respectively.
 
-![0-9](https://raw.github.com/mateogianolio/mlp-character-recognition/master/examples/0-9.png)
-
-![a-z](https://raw.github.com/mateogianolio/mlp-character-recognition/master/examples/a-z.png)
-
 ## Performance
 
-* **```a-z```**
+* **```abcdefghijklmnopqrstuvwxyz```**
     * **Font:** Arial, Helvetica, sans-serif
     * **MLP specification:**
       * **Neurons:** (```400``` input, ```40``` hidden, ```8``` output)
       * **Learning rate:** ```0.1```
-      * **Training set:** ```52000``` characters
-    * **Success rate:** ```98.78%```
-* **```0-9```**
+      * **Training set:** ```52000``` characters (e.g: ![abcdefghijklmnopqrstuvwxyz](https://raw.github.com/mateogianolio/mlp-character-recognition/master/examples/abcdefghijklmnopqrstuvwxyz.png))
+    * **Success rate:** ```98.52%```
+* **```0123456789```**
     * **Font:** Arial, Helvetica, sans-serif
     * **MLP specification:**
       * **Neurons:** (```400``` input, ```40``` hidden, ```8``` output)
       * **Learning rate:** ```0.1```
-      * **Training set:** ```20000``` characters
-    * **Success rate:** ```99.54%```
+      * **Training set:** ```20000``` characters (e.g: ![0123456789](https://raw.github.com/mateogianolio/mlp-character-recognition/master/examples/0123456789.png))
+    * **Success rate:** ```99.79%```
 
 ## Usage
 

@@ -4,7 +4,7 @@
       png = require('pngjs').PNG,
       fs = require('fs');
   
-  var text = '0123456789',
+  var text = 'abcdefghijklmnopqrstuvwxyz',
       chars = text.length;
   
   var set = [];
@@ -30,6 +30,8 @@
       });
       
       PNG.parse(data, parse(text, n));
+      if(n === 0)
+         fs.writeFileSync('examples/' + text + '.png', data, 'base64');
     };
   }
   
