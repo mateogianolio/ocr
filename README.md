@@ -2,9 +2,9 @@
 
 Trains a multi-layer perceptron (MLP) neural network to perform optical character recognition (OCR).
 
-The training set is automatically generated using a highly modified version of the captcha-generator [node-captcha](http://npmjs.com/package/node-captcha).
+The training set is automatically generated using a heavily modified version of the captcha-generator [node-captcha](http://npmjs.com/package/node-captcha).
 
-The network takes a 20x20-bit (400-bit) one-dimensional binary array as input and outputs an 8-bit binary array, which can then be converted into a character code. Initial performance measurements show promising success rates.
+The network takes a one-dimensional binary array (default 20x20 = 400-bit) as input and outputs an 8-bit binary array, which can then be converted into a character code. Initial performance measurements show promising success rates.
 
 After training, the network is saved as a standalone module to ```./network.js```, which can then be used in your project with
 
@@ -78,7 +78,7 @@ Tweak the network for your needs by editing the ```config.json``` file located i
 * **```image_size```**
   * The size of the square chunk (in pixels) containing a glyph. The resulting network input size is ```image_size```^2.
 * **```threshold```**
-  * When analyzing the pixels of a glyph, the algorithm reduces each pixel ```(r, g, b)``` to ```(r + g + b)``` and everything below ```threshold``` is marked as 1 in the resulting 20x20 binary array used as network input.
+  * When analyzing the pixels of a glyph, the algorithm reduces each pixel ```(r, g, b)``` to ```(r + g + b)``` and everything below ```threshold``` is marked as 1 in the resulting binary array used as network input.
 * **```network```**
   * **```hidden```**
     * The size (number of neurons) of the hidden layer of the network.
