@@ -13,4 +13,8 @@
     "pngjs": "^0.4.0",
     "synaptic": "^0.1.7"
   }
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mateogianolio/mlp-character-recognition.git"
+  }
 }
