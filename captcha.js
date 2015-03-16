@@ -17,7 +17,7 @@
     context.fillRect(0, 0, config.width, config.height);
     context.fillStyle = config.color;
     
-    var fonts = [
+    var fonts = config.fonts || [
       '"Arial", "Helvetica", sans-serif',
     ];
 

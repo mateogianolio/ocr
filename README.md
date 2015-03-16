@@ -41,6 +41,27 @@ var output = network.activate(input);
     * **Size:** ```20000``` characters
 * **Measured success rate:** ```99.66%``` (of 20000 inputs from testing set)
 
+## Configuration
+
+Tweak the network for your needs by editing the ```config.json``` file located in the main folder. Pasted below is the default config file.
+
+```javascript
+{
+  "text": "0123456789",
+  "fonts": [
+    "'Arial', 'Helvetica', sans-serif"
+  ],
+  "training_set": 2000,
+  "testing_set": 500,
+  "image_size": 20,
+  "threshold": 400,
+  "network": {
+    "hidden": 40,
+    "learning_rate": .1
+  }
+}
+```
+
 ## Usage
 
 Clone this repository. The script is using [canvas](https://www.npmjs.com/package/canvas), so you'll need to install the **Cairo** rendering engine. On OSX, this can be done with the following one-liner (copied from canvas README):
@@ -62,6 +83,9 @@ Here is an example run of the script:
 
 ```bash
 $ node main.js
+reading config file ...
+... done
+
 generating images ...
 ... done
 
@@ -71,8 +95,8 @@ neural network specs:
     hidden: 40 neurons.
     output: 8 neurons.
   learning rate: 0.1
-  training set: 52000 characters.
-  testing set: 52000 characters.
+  training set: 20000 characters.
+  testing set: 5000 characters.
 
 learning ...
 progress: 10%
@@ -88,7 +112,7 @@ progress: 90%
 
 network saved to ./network.js
 
-testing on 52000  samples ...
+testing on 5000 samples ...
 progress: 10%
 progress: 20%
 progress: 30%
@@ -100,13 +124,8 @@ progress: 80%
 progress: 90%
 ... done
 
-success rate: 98.52884615384615 %
+success rate: 99.58 %
 ```
-
-## Todo
-
-* Add customizability (fonts, optional distortion, MLP specs, threshold etc.)
-* Add training based on target success rate
 
 ## Contribute
 

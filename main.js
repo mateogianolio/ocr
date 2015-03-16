@@ -4,7 +4,21 @@
       png = require('pngjs').PNG,
       fs = require('fs');
   
-  var text = '0123456789',
+  log('reading config file ...');
+  
+  var config = fs.readFileSync('./config.json', 'utf8');
+  if(config === null)
+    return;
+  
+  config = JSON.parse(config);
+  
+  log('... done');
+  log();
+  
+  var text = config.text || '0123456789',
+      fonts = config.fonts || [
+        '"Arial", "Helvetica", sans-serif'
+      ],
       chars = text.length;
   
   var sets = {
@@ -12,9 +26,11 @@
     testing: []
   };
   
-  var threshold = 400,
-      samples = 4000,
-      size = 20,
+  var threshold = config.threshold || 400,
+      training_set = config.training_set || 2000,
+      testing_set = config.testing_set || 500,
+      samples = training_set + testing_set,
+      size = config.image_size || 20,
       n; // index to keep track of callbacks
   
   log('generating images ...');
@@ -22,7 +38,8 @@
     captcha.generate({
       size: chars,
       height: size,
-      text: text
+      text: text,
+      fonts: fonts
     }, generate(n));
   
   // captcha callback
@@ -69,7 +86,7 @@
         
         chunk = center(chunk);
         
-        if(n <= Math.round(samples / 2) - 1) {
+        if(n < training_set) {
           sets.training.push({
             input: chunk,
             output: ('00000000' + text.charCodeAt(i).toString(2)).substr(-8).split('').map(Number)
@@ -146,11 +163,11 @@
   // train network
   function train() {
     var input = size * size,
-        hidden = size * 2,
+        hidden = config.network.hidden || size * 2,
         output = 8;
     
     var perceptron = new synaptic.Architect.Perceptron(input, hidden, output);
-    var rate = hidden / input,
+    var rate = config.network.learning_rate || (hidden / input),
         length = sets.training.length,
         object;
     

@@ -1,0 +1,14 @@
+{
+  "text": "0123456789",
+  "fonts": [
+    "'Arial', 'Helvetica', sans-serif"
+  ],
+  "training_set": 2000,
+  "testing_set": 500,
+  "image_size": 20,
+  "threshold": 400,
+  "network": {
+    "hidden": 40,
+    "learning_rate": 0.1
+  }
+}
