@@ -45,7 +45,7 @@
         throw error;
       
       var index,
-          i, j, k,
+          i, j,
           x, y;
 
       var chunk = [],
@@ -102,6 +102,8 @@
       x: 0,
       y: 0
     };
+    var x, y,
+        j, k;
 
     for(y = 0; y < size; y++) {
       for(x = 0; x < size; x++) {
