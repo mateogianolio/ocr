@@ -17,7 +17,9 @@ var output = network.activate(input);
 
 ### abcdefghijklmnopqrstuvwxyz
 
-* **Font:** Arial, Helvetica, sans-serif
+* **Fonts:**
+  * sans-serif
+  * serif
 * **MLP specification:**
   * **Neurons:** (```400``` input, ```40``` hidden, ```8``` output)
   * **Learning rate:** ```0.1```
@@ -25,12 +27,14 @@ var output = network.activate(input);
     * **Size:** ```52000``` characters
     * **Sample:** ![abcdefghijklmnopqrstuvwxyz](https://raw.github.com/mateogianolio/mlp-character-recognition/master/examples/abcdefghijklmnopqrstuvwxyz.png)
   * **Testing set:**
-    * **Size:** ```52000``` characters
-* **Measured success rate:** ```98.52884615384615%``` (of 52000 inputs from testing set)
+    * **Size:** ```13000``` characters
+* **Measured success rate:** ```96.32307692307693%```
     
 ### 0123456789
 
-* **Font:** Arial, Helvetica, sans-serif
+* **Fonts:**
+  * sans-serif
+  * serif
 * **MLP specification:**
   * **Neurons:** (```400``` input, ```40``` hidden, ```8``` output)
   * **Learning rate:** ```0.1```
@@ -38,8 +42,8 @@ var output = network.activate(input);
     * **Size:** ```20000``` characters
     * **Sample:** ![0123456789](https://raw.github.com/mateogianolio/mlp-character-recognition/master/examples/0123456789.png)
   * **Testing set:**
-    * **Size:** ```20000``` characters
-* **Measured success rate:** ```99.66%``` (of 20000 inputs from testing set)
+    * **Size:** ```5000``` characters
+* **Measured success rate:** ```99.22%```
 
 ## Configuration
 
@@ -47,9 +51,10 @@ Tweak the network for your needs by editing the ```config.json``` file located i
 
 ```javascript
 {
-  "text": "0123456789",
+  "text": "abcdefghijklmnopqrstuvwxyz",
   "fonts": [
-    "'Arial', 'Helvetica', sans-serif"
+    "sans-serif",
+    "serif"
   ],
   "training_set": 2000,
   "testing_set": 500,
@@ -61,6 +66,18 @@ Tweak the network for your needs by editing the ```config.json``` file located i
   }
 }
 ```
+
+### Legend
+
+* **```text```:** A string containing the glyphs with which to train/test the network.
+* **```fonts```:** An array of fonts to be used when generating images.
+* **```training_set```:** Number of images to be generated and used as the network training set.
+* **```testing_set```:** Same as above, but these images are used for testing the network.
+* **```image_size```:** The size of the square chunk (in pixels) containing a glyph. The resulting network input size is image_size^2.
+* **```threshold```:** When analyzing the pixels of a glyph, the algorithm reduces each pixel (r, g, b) to (r + g + b) and everything below ```threshold``` is marked as 1 in the resulting 20x20 binary array used as network input.
+* **```network```:**
+  * **```hidden```:** The size (number of neurons) of the hidden layer of the network.
+  * **```learning_rate```:** The learning rate of the network.
 
 ## Usage
 

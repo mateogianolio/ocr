@@ -1,7 +1,8 @@
 {
-  "text": "0123456789",
+  "text": "abcdefghijklmnopqrstuvwxyz",
   "fonts": [
-    "'Arial', 'Helvetica', sans-serif"
+    "sans-serif",
+    "serif"
   ],
   "training_set": 2000,
   "testing_set": 500,
