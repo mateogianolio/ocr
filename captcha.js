@@ -18,9 +18,9 @@
     context.fillStyle = config.color;
     
     var fonts = config.fonts || [
-      '"Arial", "Helvetica", sans-serif',
+      '"Arial", "Helvetica", sans-serif'
     ];
-
+    var i;
     for(i = 0; i < config.text.length; i++) {
       context.font = size + 'px ' + fonts[Math.floor(Math.random() * fonts.length)];
       context.setTransform(
