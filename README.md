@@ -15,7 +15,7 @@ var output = network.activate(input);
 
 ## Performance
 
-###```abcdefghijklmnopqrstuvwxyz```
+### ```abcdefghijklmnopqrstuvwxyz```
 
 * **Fonts:**
   * sans-serif
@@ -30,7 +30,7 @@ var output = network.activate(input);
     * **Size:** ```13000``` characters
 * **Measured success rate:** ```96.32307692307693%```
     
-###```0123456789```
+### ```0123456789```
 
 * **Fonts:**
   * sans-serif
@@ -67,23 +67,23 @@ Tweak the network for your needs by editing the ```config.json``` file located i
 }
 ```
 
-### Legend
-
-**```text:```** A string containing the glyphs with which to train/test the network.
-
-**```fonts:```** An array of fonts to be used when generating images.
-
-**```training_set:```** Number of images to be generated and used as the network training set.
-
-**```testing_set:```** Same as above, but these images are used for testing the network.
-
-**```image_size:```** The size of the square chunk (in pixels) containing a glyph. The resulting network input size is ```image_size```^2.
-
-**```threshold:```** When analyzing the pixels of a glyph, the algorithm reduces each pixel ```(r, g, b)``` to ```(r + g + b)``` and everything below ```threshold``` is marked as 1 in the resulting 20x20 binary array used as network input.
-
-**```network:```**
-* **```hidden:```** The size (number of neurons) of the hidden layer of the network.
-* **```learning_rate:```** The learning rate of the network.
+* **```text```**
+  * A string containing the glyphs with which to train/test the network.
+* **```fonts```**
+  * An array of fonts to be used when generating images.
+* **```training_set```**
+  * Number of images to be generated and used as the network training set.
+* **```testing_set```**
+  * Same as above, but these images are used for testing the network.
+* **```image_size```**
+  * The size of the square chunk (in pixels) containing a glyph. The resulting network input size is ```image_size```^2.
+* **```threshold```**
+  * When analyzing the pixels of a glyph, the algorithm reduces each pixel ```(r, g, b)``` to ```(r + g + b)``` and everything below ```threshold``` is marked as 1 in the resulting 20x20 binary array used as network input.
+* **```network```**
+  * **```hidden```**
+    * The size (number of neurons) of the hidden layer of the network.
+  * **```learning_rate```**
+    * The learning rate of the network.
 
 ## Usage
 
