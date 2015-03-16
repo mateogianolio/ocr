@@ -57,7 +57,7 @@ Tweak the network for your needs by editing the ```config.json``` file located i
   "threshold": 400,
   "network": {
     "hidden": 40,
-    "learning_rate": .1
+    "learning_rate": 0.1
   }
 }
 ```
