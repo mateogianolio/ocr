@@ -15,6 +15,24 @@ var output = network.activate(input);
 
 ## Performance
 
+### [MNIST](http://yann.lecun.com/exdb/mnist/)
+
+* **MLP specification**
+  * **Neurons**
+    * ```400``` input
+    * ```40``` hidden
+    * ```4``` output
+  * **Learning rate**
+    * ```0.1```
+  * **Training set**
+    * **Size**
+      * ```59999``` digits
+  * **Testing set**
+    * **Size**
+      * ```9999``` digits
+* **Measured success rate**
+  * ```82.08820882088209%```
+
 ### ```abcdefghijklmnopqrstuvwxyz```
 
 * **Fonts**

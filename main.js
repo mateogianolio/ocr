@@ -15,32 +15,45 @@
   log('... done');
   log();
   
-  var text = config.text || '0123456789',
-      fonts = config.fonts || [
-        '"Arial", "Helvetica", sans-serif'
-      ],
-      chars = text.length;
-  
   var sets = {
     training: [],
     testing: []
   };
   
-  var threshold = config.threshold || 400,
-      training_set = config.training_set || 2000,
-      testing_set = config.testing_set || 500,
-      samples = training_set + testing_set,
-      size = config.image_size || 20,
-      n; // index to keep track of callbacks
+  var training_set,
+      testing_set,
+      samples,
+      size,
+      threshold;
   
-  log('generating images ...');
-  for(n = 0; n < samples; n++)
-    captcha.generate({
-      size: chars,
-      height: size,
-      text: text,
-      fonts: fonts
-    }, generate(n));
+  if(config.mnist === true)
+    mnist();
+  else {
+    var text = config.text || '0123456789',
+        fonts = config.fonts || [
+          '"Arial", "Helvetica", sans-serif'
+        ],
+        chars = text.length;
+
+    var distortion = config.distortion === undefined ? true : config.distortion,
+        n; // index to keep track of callbacks
+    
+    training_set = config.training_set || 2000;
+    testing_set = config.testing_set || 500;
+    samples = training_set + testing_set;
+    size = config.image_size || 20;
+    threshold = config.threshold || 400;
+
+    log('generating images ...');
+    for(n = 0; n < samples; n++)
+      captcha.generate({
+        size: chars,
+        height: size,
+        text: text,
+        fonts: fonts,
+        distortion: distortion
+      }, generate(n));
+  }
   
   // captcha callback
   function generate(n) {
@@ -53,6 +66,96 @@
       if(n === 0)
          fs.writeFileSync('examples/' + text + '.png', data, 'base64');
     };
+  }
+  
+  // parse MNIST data
+  function mnist() {
+    log('parsing MNIST data ...');
+    var data = fs.readFileSync('./mnist/train-images.idx3-ubyte'),
+        labels = fs.readFileSync('./mnist/train-labels.idx1-ubyte'),
+        pixels = [],
+        image,
+        x, y;
+    
+    training_set = 60000;
+    testing_set = 10000;
+    samples = training_set + testing_set;
+    threshold = 50;
+    size = 20;
+    
+    var sample = Math.floor(Math.random() * training_set);
+    for(image = 0; image < training_set; image++) {
+      for(y = 4; y < size + 4; y++)
+        for(x = 4; x < size + 4; x++)
+          pixels.push(data[(image * 28 * 28) + (x + (y * 28)) + 15]);
+      
+      pixels = center(
+        pixels.map(function(pixel) {
+          return pixel > threshold ? 1 : 0;
+        })
+      );
+      
+      sets.training.push({
+        input: pixels,
+        output: ('0000' + parseInt(labels[image + 8]).toString(2)).substr(-4).split('').map(Number)
+      });
+      
+      if(image === sample) {
+        log('digit', labels[image + 8], 'from training set');
+
+        while(pixels.length)
+          log(pixels.splice(0, size).join(''));
+
+        log();
+      }
+      
+      pixels = [];
+    }
+    
+    data = fs.readFileSync('./mnist/t10k-images-2.idx3-ubyte');
+    labels = fs.readFileSync('./mnist/t10k-labels.idx1-ubyte');
+    sample = Math.floor(Math.random() * testing_set);
+    
+    for(image = 0; image < testing_set; image++) {
+      for(y = 4; y < size + 4; y++)
+        for(x = 4; x < size + 4; x++)
+          pixels.push(data[(image * 28 * 28) + (x + (y * 28)) + 15]);
+      
+      pixels = center(
+        pixels.map(function(pixel) {
+          return pixel > threshold ? 1 : 0;
+        })
+      );
+      
+      sets.testing.push({
+        input: pixels,
+        output: ('0000' + parseInt(labels[image + 8]).toString(2)).substr(-4).split('').map(Number)
+      });
+      
+      if(image === sample) {
+        log('digit', labels[image + 8], 'from testing set');
+        
+        while(pixels.length)
+          log(pixels.splice(0, size).join(''));
+        
+        log();
+      }
+      
+      pixels = [];
+    }
+    
+    log('... done');
+    log();
+    
+    // make sure sets are valid before proceeding
+    for(var key in sets) {
+      sets[key].forEach(function(object, i, array) {
+        if(object.input.length !== 400 || object.output.length !== 4)
+          array.splice(i, 1);
+      });
+    };
+    
+    train();
   }
   
   // 'parsed' event callback
@@ -166,7 +269,7 @@
   function train() {
     var input = size * size,
         hidden = config.network.hidden || size * 2,
-        output = 8;
+        output = config.mnist === true ? 4 : 8;
     
     var perceptron = new synaptic.Architect.Perceptron(input, hidden, output);
     var rate = config.network.learning_rate || (hidden / input),
@@ -185,15 +288,17 @@
     
     log('learning ...');
     
-    var i;
-    for(i = 0; i < length; i++) {
-      object = sets.training[i];
+    var count = 0;
+    while(sets.training.length) {
+      object = sets.training.pop();
       
-      if(i > 0 && !(i % Math.round(length / 10)))
-        log('progress:', Math.round(100 * (i / length)) + '%');
+      if(count > 0 && !(count % Math.round(length / 10)))
+        log('progress:', Math.round(100 * (count / length)) + '%');
       
       perceptron.activate(object.input);
       perceptron.propagate(rate, object.output);
+      
+      count++;
     }
     
     log('... done');
@@ -217,15 +322,15 @@
     
     var length = sets.testing.length,
         success = 0,
-        i;
+        count = 0;
     
     // test on random inputs
     log('testing on', length, 'samples ...');
-    for(i = 0; i < length; i++) {
-      object = sets.testing[i];
+    while(sets.testing.length) {
+      object = sets.testing.pop();
       
-      if(i > 0 && !(i % Math.round(length / 10)))
-        log('progress:', Math.round(100 * (i / length)) + '%');
+      if(count > 0 && !(count % Math.round(length / 10)))
+        log('progress:', Math.round(100 * (count / length)) + '%');
       
       input = object.input;
       output = object.output;
@@ -237,11 +342,18 @@
         });
       
       // convert to chars
-      prediction = String.fromCharCode(parseInt(prediction.join(''), 2));
-      result = String.fromCharCode(parseInt(output.join(''), 2));
+      if(config.mnist === true) {
+        prediction = parseInt(prediction.join(''), 2);
+        result = parseInt(output.join(''), 2);
+      } else {
+        prediction = String.fromCharCode(parseInt(prediction.join(''), 2));
+        result = String.fromCharCode(parseInt(output.join(''), 2));
+      }
 
       if(prediction === result)
         success++;
+      
+      count++;
     }
     
     log('... done');

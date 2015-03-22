@@ -8,6 +8,7 @@
     config.color = config.color || 'rgb(0,0,0)';
     config.background = config.background || 'rgb(255,255,255)';
     config.text = config.text || ('' + Math.random()).substr(2, config.size);
+    config.distortion = config.distortion === undefined ? true : config.distortion;
 
     var size = Math.round(config.height * .7),
         c = new canvas(config.width, config.height),
@@ -23,14 +24,27 @@
     var i;
     for(i = 0; i < config.text.length; i++) {
       context.font = size + 'px ' + fonts[Math.floor(Math.random() * fonts.length)];
-      context.setTransform(
-        Math.random() * 0.25 + 1, // scale horizontally
-        Math.random() * 0.25, // skew horizontally
-        Math.random() * 0.25, // skew vertically
-        Math.random() * 0.25 + 1, // scale vertically
-        config.height * i + (config.height - size) / 2, // move horizontally
-        config.height - size / 2 // move vertically
-      );
+      
+      if(config.distortion) {
+        context.setTransform(
+          Math.random() * 0.25 + 1, // scale horizontally
+          Math.random() * 0.25, // skew horizontally
+          Math.random() * 0.25, // skew vertically
+          Math.random() * 0.25 + 1, // scale vertically
+          config.height * i + (config.height - size) / 2, // move horizontally
+          config.height - size / 2 // move vertically
+        );
+      } else {
+        context.setTransform(
+          1, // scale horizontally
+          0, // skew horizontally
+          0, // skew vertically
+          1, // scale vertically
+          config.height * i + (config.height - size) / 2, // move horizontally
+          config.height - size / 2 // move vertically
+        );
+      }
+      
       context.fillText(config.text.charAt(i), 0, 0);
     }
 

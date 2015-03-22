@@ -1,4 +1,5 @@
 {
+  "mnist": false,
   "text": "abcdefghijklmnopqrstuvwxyz",
   "fonts": [
     "sans-serif",
