@@ -85,6 +85,7 @@ Tweak the network for your needs by editing the ```config.json``` file located i
 
 ```javascript
 {
+  "mnist": false,
   "text": "abcdefghijklmnopqrstuvwxyz",
   "fonts": [
     "sans-serif",
@@ -101,6 +102,8 @@ Tweak the network for your needs by editing the ```config.json``` file located i
 }
 ```
 
+* **```mnist```**
+  * If set to true, the MNIST handwritten digit dataset will be used for training and testing the network.
 * **```text```**
   * A string containing the glyphs with which to train/test the network.
 * **```fonts```**
