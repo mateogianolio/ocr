@@ -47,6 +47,40 @@ var character = String.fromCharCode(parseInt(output.join(''), 2));
 * **Training time:** ```3 min 58 s 225 ms```
 * **Success rate:** ```78.06%```
 
+### [A-Za-z0-9]
+
+```javascript
+// config.json
+{
+  "mnist": false,
+  "text": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012356789",
+  "fonts": [
+    "sans-serif",
+    "serif"
+  ],
+  "training_set": 2000,
+  "testing_set": 1000,
+  "image_size": 16,
+  "threshold": 400,
+  "network": {
+    "hidden": 40,
+    "learning_rate": 0.03
+  }
+}
+```
+
+* **Neurons**
+  * ```256``` input
+  * ```40``` hidden
+  * ```8``` output
+* **Learning rate:** ```0.03```
+* **Training set**
+  * **Size:** ```122000``` characters
+  * **Sample:** ![abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789](https://raw.github.com/mateogianolio/mlp-character-recognition/master/examples/abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.png)
+* **Testing set:** ```61000``` characters
+* **Training time:** ```4 min 7 s 355 ms```
+* **Success rate:** ```74.76885245901639%```
+
 ### [a-z]
 
 ```javascript
