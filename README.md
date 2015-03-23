@@ -32,7 +32,7 @@ var character = String.fromCharCode(parseInt(output.join(''), 2));
   "mnist": true,
   "network": {
     "hidden": 40,
-    "learning_rate": 0.1
+    "learning_rate": 0.02
   }
 }
 ```
