@@ -75,11 +75,11 @@ var character = String.fromCharCode(parseInt(output.join(''), 2));
   * ```8``` output
 * **Learning rate:** ```0.03```
 * **Training set**
-  * **Size:** ```122000``` characters
+  * **Size:** ```124000``` characters
   * **Sample:** ![abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789](https://raw.github.com/mateogianolio/mlp-character-recognition/master/examples/abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.png)
-* **Testing set:** ```61000``` characters
-* **Training time:** ```4 min 7 s 355 ms```
-* **Success rate:** ```74.76885245901639%```
+* **Testing set:** ```62000``` characters
+* **Training time:** ```4 min 8 s 2 ms```
+* **Success rate:** ```78.60322580645162%```
 
 ### [a-z]
 

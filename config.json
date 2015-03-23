@@ -1,6 +1,6 @@
 {
   "mnist": false,
-  "text": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012356789",
+  "text": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
   "fonts": [
     "sans-serif",
     "serif"
