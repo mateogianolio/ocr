@@ -39,7 +39,7 @@ var character = String.fromCharCode(parseInt(output.join(''), 2));
 
 * **Neurons**
   * ```400``` input
-  * ```40``` hidden
+  * ```160``` hidden
   * ```4``` output
 * **Learning rate:** ```0.03```
 * **Training set:** ```60000``` digits
