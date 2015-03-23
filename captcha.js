@@ -12,16 +12,14 @@
 
     var size = Math.round(config.height * .7),
         c = new canvas(config.width, config.height),
-        context = c.getContext('2d');
+        context = c.getContext('2d'),
+        fonts = config.fonts || ['sans-serif', 'serif'],
+        i;
 
     context.fillStyle = config.background;
     context.fillRect(0, 0, config.width, config.height);
     context.fillStyle = config.color;
     
-    var fonts = config.fonts || [
-      '"Arial", "Helvetica", sans-serif'
-    ];
-    var i;
     for(i = 0; i < config.text.length; i++) {
       context.font = size + 'px ' + fonts[Math.floor(Math.random() * fonts.length)];
       
