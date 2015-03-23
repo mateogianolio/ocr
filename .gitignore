@@ -30,4 +30,4 @@ node_modules
 input/*.png
 
 # Generated network
-network.js
+ocr.js

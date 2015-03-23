@@ -134,6 +134,7 @@
     tools.validate(perceptron, testing);
     
     network.train(perceptron, training, config.network.learning_rate);
+    fs.writeFileSync('./ocr.js', perceptron.standalone().toString());
     network.test(perceptron, testing);
   }
   
@@ -187,6 +188,7 @@
         log();
         
         network.train(perceptron, training, config.network.learning_rate);
+        fs.writeFileSync('./ocr.js', perceptron.standalone().toString());
         network.test(perceptron, testing);
       }
     };

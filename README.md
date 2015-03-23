@@ -2,15 +2,24 @@
 
 Trains a multi-layer perceptron (MLP) neural network to perform optical character recognition (OCR).
 
-The training set is automatically generated using a heavily modified version of the captcha-generator [node-captcha](http://npmjs.com/package/node-captcha).
+The training set is automatically generated using a heavily modified version of the captcha-generator [node-captcha](http://npmjs.com/package/node-captcha). Support for the MNIST handwritten digit database has been added recently (see performance section).
 
-The network takes a one-dimensional binary array (default 20x20 = 400-bit) as input and outputs an 8-bit binary array, which can then be converted into a character code. Initial performance measurements show promising success rates.
+The network takes a one-dimensional binary array (default ```20 * 20 = 400```-bit) as input and outputs an 8-bit array, which can then be converted into a character code. Initial performance measurements show promising success rates.
 
-After training, the network is saved as a standalone module to ```./network.js```, which can then be used in your project with
+After training, the network is saved as a standalone module to ```./ocr.js```, which can then be used in your project with
 
 ```javascript
-var network = require('./network.js');
-var output = network.activate(input);
+var ocr = require('./ocr.js');
+var output = ocr
+  .activate(input)
+  .map(function(bit) {
+    return bit > 0.5 ? 1 : 0;
+  });
+  
+// output is now binary array, converting to character is easy
+var character = String.fromCharCode(parseInt(output.join(''), 2));
+
+// do stuff ...
 ```
 
 ## Performance
@@ -63,12 +72,11 @@ var output = network.activate(input);
   * ```0.1```
 * **Training set**
   * **Size**
-    * ```20000``` characters
+    * ```20000``` digits
   * **Sample**
     * ![0123456789](https://raw.github.com/mateogianolio/mlp-character-recognition/master/examples/0123456789.png)
 * **Testing set**
-  * **Size**
-    * ```5000``` characters
+  * ```5000``` digits
 * **Measured success rate**
   * ```99.22%```
 
@@ -96,7 +104,7 @@ Tweak the network for your needs by editing the ```config.json``` file located i
 ```
 
 * **```mnist```**
-  * If set to true, the MNIST handwritten digit dataset will be used for training and testing the network.
+  * If set to true, the MNIST handwritten digit dataset will be used for training and testing the network. This setting will overwrite configured set sizes and will ignore the ```image_size```, ```threshold```, ```fonts``` and ```text``` settings.
 * **```text```**
   * A string containing the glyphs with which to train/test the network.
 * **```fonts```**
