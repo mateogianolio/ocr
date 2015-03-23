@@ -41,11 +41,11 @@ var character = String.fromCharCode(parseInt(output.join(''), 2));
   * ```400``` input
   * ```40``` hidden
   * ```4``` output
-* **Learning rate:** ```0.1```
+* **Learning rate:** ```0.02```
 * **Training set:** ```60000``` digits
 * **Testing set:** ```10000``` digits
-* **Training time:** ```3 min 58 s 225 ms```
-* **Success rate:** ```78.06%```
+* **Training time:** ```4 min 11 s 337 ms```
+* **Success rate:** ```89.08%```
 
 ### [A-Za-z0-9]
 
