@@ -31,8 +31,8 @@ var character = String.fromCharCode(parseInt(output.join(''), 2));
 {
   "mnist": true,
   "network": {
-    "hidden": 40,
-    "learning_rate": 0.02
+    "hidden": 160,
+    "learning_rate": 0.03
   }
 }
 ```
@@ -41,11 +41,11 @@ var character = String.fromCharCode(parseInt(output.join(''), 2));
   * ```400``` input
   * ```40``` hidden
   * ```4``` output
-* **Learning rate:** ```0.02```
+* **Learning rate:** ```0.03```
 * **Training set:** ```60000``` digits
 * **Testing set:** ```10000``` digits
-* **Training time:** ```4 min 11 s 337 ms```
-* **Success rate:** ```89.08%```
+* **Training time:** ```36 min 22 s 50 ms```
+* **Success rate:** ```90.14%```
 
 ### [A-Za-z0-9]
 
