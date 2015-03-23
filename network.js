@@ -11,13 +11,15 @@
     log('  hidden:', network.layers.hidden[0].size, 'neurons.');
     log('  output:', network.layers.output.size, 'neurons.');
     log('learning rate:', rate, '\n');
-    log('learning ...');
+    log('training with', length, 'inputs ...');
+    
+    var start = process.hrtime();
     
     while(set.length) {
       object = set.pop();
       
       if(count % Math.round(length / 10) === 0)
-        log('progress:', Math.round(100 * (count / length)) + '%');
+        log('progress:', Math.round(100 * (count / length)),'%');
       
       network.activate(object.input);
       network.propagate(rate, object.output);
@@ -25,7 +27,14 @@
       count++;
     }
     
-    log('... done');
+    var elapsed = process.hrtime(start);
+    var time = {
+      minutes: Math.floor(elapsed[0] / 60),
+      seconds: elapsed[0] % 60,
+      milliseconds: Math.floor(elapsed[1] / 1000000)
+    };
+    
+    log('... done', '(' + time.minutes, 'min', time.seconds, 's', time.milliseconds, 'ms)');
     log();
   };
   
@@ -38,7 +47,7 @@
         count = 0;
     
     // test on random inputs
-    log('testing on', length, 'samples ...');
+    log('testing on', length, 'inputs ...');
     while(set.length) {
       object = set.pop();
       

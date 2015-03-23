@@ -26,59 +26,97 @@ var character = String.fromCharCode(parseInt(output.join(''), 2));
 
 ### [MNIST [0-9]](http://yann.lecun.com/exdb/mnist/)
 
+```config.json```:
+
+```javascript
+{
+  "mnist": true,
+  "network": {
+    "hidden": 40,
+    "learning_rate": 0.1
+  }
+}
+```
+
 * **Neurons**
   * ```400``` input
   * ```40``` hidden
   * ```4``` output
-* **Learning rate**
-  * ```0.1```
-* **Training set**
-  * ```59999``` digits
-* **Testing set**
-  * ```9999``` digits
-* **Measured success rate**
-  * ```82.08820882088209%```
+* **Learning rate:** ```0.1```
+* **Training set:** ```60000``` digits
+* **Testing set:** ```10000``` digits
+* **Training time:** ```3 min 58 s 225 ms```
+* **Success rate:** ```78.06%```
 
 ### [a-z]
 
-* **Fonts**
-  * sans-serif
-  * serif
+```config.json```:
+
+```javascript
+{
+  "mnist": false,
+  "text": "abcdefghijklmnopqrstuvwxyz",
+  "fonts": [
+    "sans-serif",
+    "serif"
+  ],
+  "training_set": 2000,
+  "testing_set": 1000,
+  "image_size": 16,
+  "threshold": 400,
+  "network": {
+    "hidden": 40,
+    "learning_rate": 0.1
+  }
+}
+```
+
 * **Neurons**
-  * ```400``` input
+  * ```256``` input
   * ```40``` hidden
   * ```8``` output
-* **Learning rate**
-  * ```0.1```
+* **Learning rate:** ```0.1```
 * **Training set**
-  * ```52000``` characters
-  * **Sample**
-    * ![abcdefghijklmnopqrstuvwxyz](https://raw.github.com/mateogianolio/mlp-character-recognition/master/examples/abcdefghijklmnopqrstuvwxyz.png)
-* **Testing set**
-  * ```13000``` characters
-* **Measured success rate**
-  * ```96.32307692307693%```
+  * **Size:** ```52000``` characters
+  * **Sample:** ![abcdefghijklmnopqrstuvwxyz](https://raw.github.com/mateogianolio/mlp-character-recognition/master/examples/abcdefghijklmnopqrstuvwxyz.png)
+* **Testing set:** ```26000``` characters
+* **Training time:** ```2 min 10 s 752 ms```
+* **Success rate:** ```91.77692307692308%```
     
 ### [0-9]
 
-* **Fonts**
-  * sans-serif
-  * serif
+```config.json```:
+
+```javascript
+{
+  "mnist": false,
+  "text": "0123456789",
+  "fonts": [
+    "sans-serif",
+    "serif"
+  ],
+  "training_set": 2000,
+  "testing_set": 1000,
+  "image_size": 16,
+  "threshold": 400,
+  "network": {
+    "hidden": 40,
+    "learning_rate": 0.1
+  }
+}
+```
+
 * **Neurons**
-  * ```400``` input
+  * ```256``` input
   * ```40``` hidden
   * ```8``` output
-* **Learning rate**
-  * ```0.1```
+* **Learning rate:** ```0.1```
 * **Training set**
-  * **Size**
-    * ```20000``` digits
-  * **Sample**
-    * ![0123456789](https://raw.github.com/mateogianolio/mlp-character-recognition/master/examples/0123456789.png)
-* **Testing set**
-  * ```5000``` digits
-* **Measured success rate**
-  * ```99.22%```
+  * **Size:** ```20000``` digits
+  * **Sample:** ![0123456789](https://raw.github.com/mateogianolio/mlp-character-recognition/master/examples/0123456789.png)
+* **Testing set:** ```10000``` digits
+* **Training time:** ```1 min 6 s 620 ms```
+* **Success rate:** ```99.22%```
 
 ## Configuration
 

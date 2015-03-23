@@ -1,14 +1,5 @@
 {
-  "mnist": false,
-  "text": "abcdefghijklmnopqrstuvwxyz",
-  "fonts": [
-    "sans-serif",
-    "serif"
-  ],
-  "training_set": 2000,
-  "testing_set": 500,
-  "image_size": 20,
-  "threshold": 400,
+  "mnist": true,
   "network": {
     "hidden": 40,
     "learning_rate": 0.1

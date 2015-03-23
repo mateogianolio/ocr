@@ -49,7 +49,7 @@
         training = [],
         testing = [],
         settings = {
-          size: chars,
+          size: config.text.length,
           height: config.image_size,
           text: config.text,
           fonts: config.fonts,
@@ -67,6 +67,9 @@
     return function(text, data) {
       var png = new PNG({ filterType: 4 });
       png.parse(data, parse(text, index));
+      
+      if(index === 0)
+        fs.writeFileSync('./examples/' + text + '.png', data, 'base64');
     };
   }
   
@@ -149,7 +152,7 @@
           pixel = [],
           i, j, k, x, y;
       
-      for(i = 0; i < chars; i++) {
+      for(i = 0; i < config.text.length; i++) {
         for(y = 0; y < data.height; y++) {
           for(x = i * config.image_size; x < (i * config.image_size + config.image_size); x++) {
             position = (data.width * y + x) << 2;
@@ -160,7 +163,7 @@
             chunk.push(
               pixel.reduce(function(previous, current) {
                 return previous + current;
-              }) > threshold ? 0 : 1
+              }) > config.threshold ? 0 : 1
             );
             pixel = [];
           }
@@ -168,7 +171,7 @@
         
         chunk = tools.center(chunk);
         
-        if(index < training_set) {
+        if(index < config.training_set) {
           training.push({
             input: chunk,
             output: ('00000000' + text.charCodeAt(i).toString(2)).substr(-8).split('').map(Number)
