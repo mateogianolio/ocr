@@ -26,9 +26,8 @@ var character = String.fromCharCode(parseInt(output.join(''), 2));
 
 ### [MNIST [0-9]](http://yann.lecun.com/exdb/mnist/)
 
-```config.json```:
-
 ```javascript
+// config.json
 {
   "mnist": true,
   "network": {
@@ -50,9 +49,8 @@ var character = String.fromCharCode(parseInt(output.join(''), 2));
 
 ### [a-z]
 
-```config.json```:
-
 ```javascript
+// config.json
 {
   "mnist": false,
   "text": "abcdefghijklmnopqrstuvwxyz",
@@ -85,9 +83,8 @@ var character = String.fromCharCode(parseInt(output.join(''), 2));
     
 ### [0-9]
 
-```config.json```:
-
 ```javascript
+// config.json
 {
   "mnist": false,
   "text": "0123456789",
@@ -123,6 +120,7 @@ var character = String.fromCharCode(parseInt(output.join(''), 2));
 Tweak the network for your needs by editing the ```config.json``` file located in the main folder. Pasted below is the default config file.
 
 ```javascript
+// config.json
 {
   "mnist": false,
   "text": "abcdefghijklmnopqrstuvwxyz",
