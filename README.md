@@ -24,6 +24,8 @@ var character = String.fromCharCode(parseInt(output.join(''), 2));
 
 ## Performance
 
+All runs below were performed with an i5 MacBook Air 13" Mid 2012 with 4GB RAM.
+
 ### [MNIST [0-9]](http://yann.lecun.com/exdb/mnist/)
 
 To test with the MNIST dataset: click on the title above, download the 4 data files and put them in a folder called ```mnist``` in the root directory of this repository.
