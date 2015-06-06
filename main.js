@@ -22,6 +22,7 @@
   config.fonts = config.fonts || ['serif', 'sans-serif'];
   config.distortion = config.distortion === undefined ? true : config.distortion;
   config.network.hidden = config.network.hidden || 40;
+  config.network.output = config.network.output || 8;
   config.network.learning_rate = config.network.learning_rate || 0.1;
   
   log('... done');
@@ -33,7 +34,7 @@
     perceptron = new synaptic.Architect.Perceptron(
       (config.image_size * config.image_size), // input
       config.network.hidden, // hidden
-      4 // output
+      config.network.output // output
     );
     
     mnist();
@@ -41,7 +42,7 @@
     perceptron = new synaptic.Architect.Perceptron(
       (config.image_size * config.image_size), // input
       config.network.hidden, // hidden
-      8 // output
+      config.network.output // output
     );
     
     var index,
@@ -174,12 +175,12 @@
         if(index < config.training_set) {
           training.push({
             input: chunk,
-            output: ('00000000' + text.charCodeAt(i).toString(2)).substr(-8).split('').map(Number)
+            output: ('0000' + text.charCodeAt(i).toString(2)).substr(-4).split('').map(Number)
           });
         } else {
           testing.push({
             input: chunk,
-            output: ('00000000' + text.charCodeAt(i).toString(2)).substr(-8).split('').map(Number)
+            output: ('0000' + text.charCodeAt(i).toString(2)).substr(-4).split('').map(Number)
           });
         }
         
