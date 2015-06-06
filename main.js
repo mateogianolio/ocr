@@ -41,7 +41,7 @@
     perceptron = new synaptic.Architect.Perceptron(
       (config.image_size * config.image_size), // input
       config.network.hidden, // hidden
-      8 // output
+      config.network.output // output
     );
     
     var index,
@@ -171,15 +171,18 @@
         
         chunk = tools.center(chunk);
         
+        var output = Array.apply(null, new Array(10)).map(Number.prototype.valueOf, 0);
+        output[i] = 1;
+        
         if(index < config.training_set) {
           training.push({
             input: chunk,
-            output: ('00000000' + text.charCodeAt(i).toString(2)).substr(-8).split('').map(Number)
+            output: output
           });
         } else {
           testing.push({
             input: chunk,
-            output: ('00000000' + text.charCodeAt(i).toString(2)).substr(-8).split('').map(Number)
+            output: output
           });
         }
         

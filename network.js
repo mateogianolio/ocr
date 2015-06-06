@@ -56,13 +56,9 @@
 
       prediction = network
         .activate(object.input)
-        .map(function(bit) {
-          return bit > 0.5 ? 1 : 0;
-        });
       
-      // convert to char codes
-      prediction = String.fromCharCode(parseInt(prediction.join(''), 2));
-      result = String.fromCharCode(parseInt(object.output.join(''), 2));
+      prediction = prediction.indexOf(Math.max.apply(null, prediction));
+      result = object.output.indexOf(1);
 
       if(prediction === result)
         success++;
