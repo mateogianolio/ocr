@@ -22,6 +22,7 @@
   config.fonts = config.fonts || ['serif', 'sans-serif'];
   config.distortion = config.distortion === undefined ? true : config.distortion;
   config.network.hidden = config.network.hidden || 40;
+  config.network.output = config.network.output || 8;
   config.network.learning_rate = config.network.learning_rate || 0.1;
   
   log('... done');
@@ -171,7 +172,7 @@
         
         chunk = tools.center(chunk);
         
-        var output = Array.apply(null, new Array(10)).map(Number.prototype.valueOf, 0);
+        var output = Array.apply(null, new Array(config.network.output)).map(Number.prototype.valueOf, 0);
         output[i] = 1;
         
         if(index < config.training_set) {
