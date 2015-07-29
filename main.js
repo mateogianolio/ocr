@@ -78,8 +78,8 @@
   function mnist() {
     log('parsing MNIST data ...');
     
-    var data = fs.readFileSync('./mnist/train-images.idx3-ubyte'),
-        labels = fs.readFileSync('./mnist/train-labels.idx1-ubyte'),
+    var data = fs.readFileSync('./mnist/train-images-idx3-ubyte'),
+        labels = fs.readFileSync('./mnist/train-labels-idx1-ubyte'),
         training = [],
         testing = [],
         pixels = [],
@@ -110,8 +110,8 @@
       pixels = [];
     }
     
-    data = fs.readFileSync('./mnist/t10k-images-2.idx3-ubyte');
-    labels = fs.readFileSync('./mnist/t10k-labels.idx1-ubyte');
+    data = fs.readFileSync('./mnist/t10k-images-idx3-ubyte');
+    labels = fs.readFileSync('./mnist/t10k-labels-idx1-ubyte');
     
     for(image = 0; image < config.testing_set; image++) {
       for(y = 4; y < config.image_size + 4; y++)
