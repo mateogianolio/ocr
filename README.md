@@ -199,10 +199,10 @@ Tweak the network for your needs by editing the ```config.json``` file located i
 
 ## Usage
 
-Clone this repository. The script is using [canvas](https://www.npmjs.com/package/canvas), so you'll need to install the **Cairo** rendering engine. On OSX, this can be done with the following one-liner (copied from canvas README):
+Clone this repository. The script is using [canvas](https://www.npmjs.com/package/canvas), so you'll need to install the **Cairo** rendering engine. On OS X, assuming you have [Homebrew](http://brew.sh) installed, this can be done with the following (copied from canvas README):
 
 ```bash
-$ wget https://raw.githubusercontent.com/LearnBoost/node-canvas/master/install -O - | sh
+$ brew install cairo jpeg giflib
 ```
 
 Then install npm dependencies and test it:
