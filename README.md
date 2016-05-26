@@ -36,7 +36,7 @@ var prediction = predict(one);
 
 // the index with the maximum probability is the best guess
 console.log('prediction:', prediction.indexOf(Math.max.apply(null, prediction)));
-// will hopefully output 1 :)
+// will hopefully output 1 if trained with 0-9 :)
 ```
 
 ## Performance
