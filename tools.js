@@ -1,14 +1,12 @@
 (function() {
   'use strict';
-  
-  // make sure a set matches a network's i/o
-  module.exports.validate = function(network, set) {
-    set.forEach(function(object, i, array) {
-      if(object.input.length !== network.layers.input.size || object.output.length !== network.layers.output.size)
-        array.splice(i, 1);
-    });
+
+  module.exports.binary = function (threshold) {
+    return function (pixel) {
+      return pixel > threshold ? 1 : 0;
+    };
   };
-  
+
   // bounding box centering
   module.exports.center = function(chunk) {
     var size = Math.sqrt(chunk.length),

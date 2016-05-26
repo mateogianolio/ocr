@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 (function (log) {
   'use strict';
 
   log('reading config file ...');
+=======
+(function () {
+  'use strict';
+
+  console.log('reading config file ...');
+>>>>>>> softmax
 
   var synaptic = require('synaptic'),
       network = require('./network.js'),
@@ -22,6 +29,7 @@
   config.fonts = config.fonts || ['serif', 'sans-serif'];
   config.distortion = config.distortion === undefined ? true : config.distortion;
   config.network.hidden = config.network.hidden || 40;
+<<<<<<< HEAD
   config.network.output = config.network.output || 8;
   config.network.learning_rate = config.network.learning_rate || 0.1;
 
@@ -145,13 +153,52 @@
   // 'parsed' event callback
   function parse(text, index) {
     return function(error, data) {
+=======
+  config.network.output = config.network.output || 10;
+  config.network.learning_rate = config.network.learning_rate || 0.1;
+
+  console.log('... done');
+  console.log();
+
+  var perceptron = new synaptic.Architect.Perceptron(
+    (config.image_size * config.image_size), // input
+    config.network.hidden, // hidden
+    config.network.output // output
+  );
+
+  var index,
+      samples = config.training_set + config.testing_set,
+      training = [],
+      testing = [],
+      settings = {
+        size: config.text.length,
+        height: config.image_size,
+        text: config.text,
+        fonts: config.fonts,
+        distortion: config.distortion
+      };
+
+  // captcha callback
+  var k = 0;
+  function generate(text, data) {
+    if (k === 0)
+      fs.writeFileSync('./examples/' + text + '.png', data, 'base64');
+
+    var png = new PNG({ filterType: 4 });
+
+    png.parse(data, function(error, data) {
+>>>>>>> softmax
       if(error)
         throw error;
 
       var position,
           chunk = [],
           pixel = [],
+<<<<<<< HEAD
           i, j, k, x, y;
+=======
+          i, j, x, y;
+>>>>>>> softmax
 
       for(i = 0; i < config.text.length; i++) {
         for(y = 0; y < data.height; y++) {
@@ -175,7 +222,11 @@
         var output = Array.apply(null, new Array(config.network.output)).map(Number.prototype.valueOf, 0);
         output[i] = 1;
 
+<<<<<<< HEAD
         if(index < config.training_set) {
+=======
+        if(k < config.training_set) {
+>>>>>>> softmax
           training.push({
             input: chunk,
             output: output
@@ -190,14 +241,29 @@
         chunk = [];
       }
 
+<<<<<<< HEAD
       if(index === samples - 1) {
         log('... done');
         log();
+=======
+      if(k++ === samples - 1) {
+        console.log('... done');
+        console.log();
+>>>>>>> softmax
 
         network.train(perceptron, training, config.network.learning_rate);
-        fs.writeFileSync('./ocr.js', perceptron.standalone().toString());
+        fs.writeFileSync('./ocr.js', 'module.exports = ' + perceptron.standalone().toString());
         network.test(perceptron, testing);
       }
-    };
+    });
   }
+<<<<<<< HEAD
 })(console.log);
+=======
+
+  console.log('generating images ...');
+
+  for(index = 0; index < samples; index++)
+    captcha.generate(settings, generate);
+})();
+>>>>>>> softmax
