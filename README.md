@@ -58,6 +58,12 @@ To test with the MNIST dataset: click on the title above, download the 4 data fi
 }
 ```
 
+Then run
+
+```bash
+$ node mnist.js
+```
+
 * **Neurons**
   * ```400``` input
   * ```160``` hidden
