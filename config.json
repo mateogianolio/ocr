@@ -1,12 +1,16 @@
 {
+  "mnist": false,
   "text": "0123456789",
+  "fonts": [
+    "sans-serif",
+    "serif"
+  ],
   "training_set": 2000,
-  "testing_set": 500,
+  "testing_set": 1000,
   "image_size": 16,
   "threshold": 400,
   "network": {
     "hidden": 40,
-    "output": 10,
     "learning_rate": 0.1
   }
 }
