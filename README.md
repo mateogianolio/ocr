@@ -222,19 +222,3 @@ Tweak the network for your needs by editing the ```config.json``` file located i
     * The size (number of neurons) of the hidden layer of the network.
   * **```learning_rate```**
     * The learning rate of the network.
-
-## Usage
-
-Clone this repository. The script is using [canvas](https://www.npmjs.com/package/canvas), so you'll need to install the **Cairo** rendering engine. On OS X, assuming you have [Homebrew](http://brew.sh) installed, this can be done with the following (copied from canvas README):
-
-```bash
-$ brew install cairo jpeg giflib
-```
-
-Then install npm dependencies and test it:
-
-```bash
-$ npm install
-$ node main.js
-$ node test.js
-```
