@@ -1,6 +1,12 @@
 (function() {
   'use strict';
 
+  module.exports.binary = function (threshold) {
+    return function (pixel) {
+      return pixel > threshold ? 1 : 0;
+    };
+  };
+
   // bounding box centering
   module.exports.center = function(chunk) {
     var size = Math.sqrt(chunk.length),

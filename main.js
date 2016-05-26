@@ -46,10 +46,6 @@
         distortion: config.distortion
       };
 
-  function binary(pixel) {
-    return pixel > config.threshold ? 1 : 0;
-  }
-
   // captcha callback
   function generate(index) {
     return function(text, data) {

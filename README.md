@@ -4,22 +4,39 @@ Trains a multi-layer perceptron (MLP) neural network to perform optical characte
 
 The training set is automatically generated using a heavily modified version of the captcha-generator [node-captcha](http://npmjs.com/package/node-captcha). Support for the MNIST handwritten digit database has been added recently (see performance section).
 
-The network takes a one-dimensional binary array (default ```20 * 20 = 400```-bit) as input and outputs an 8-bit array, which can then be converted into a character code. Initial performance measurements show promising success rates.
+The network takes a one-dimensional binary array (default ```20 * 20 = 400```-bit) as input and outputs an 10-bit array of probabilities, which can be converted into a character code. Initial performance measurements show promising success rates.
 
-After training, the network is saved as a standalone module to ```./ocr.js```, which can then be used in your project with
+After training, the network is saved as a standalone module to ```./ocr.js```, which can then be used in your project like this (from `test.js`):
 
 ```javascript
-var ocr = require('./ocr.js');
-var output = ocr
-  .activate(input)
-  .map(function(bit) {
-    return bit > 0.5 ? 1 : 0;
-  });
-  
-// output is now binary array, converting to character is easy
-var character = String.fromCharCode(parseInt(output.join(''), 2));
+var predict = require('./ocr.js');
 
-// do stuff ...
+// a binary array that we want to predict
+var one = [
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+];
+
+// the prediction is an array of probabilities
+var prediction = predict(one);
+
+// the index with the maximum probability is the best guess
+console.log('prediction:', prediction.indexOf(Math.max.apply(null, prediction)));
+// will hopefully output 1 :)
 ```
 
 ## Performance
@@ -118,7 +135,7 @@ To test with the MNIST dataset: click on the title above, download the 4 data fi
 * **Testing set:** ```26000``` characters
 * **Training time:** ```2 min 10 s 752 ms```
 * **Success rate:** ```91.77692307692308%```
-    
+
 ### [0-9]
 
 ```javascript
