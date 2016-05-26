@@ -1,4 +1,4 @@
-# MLP character recognition
+# OCR
 
 Trains a multi-layer perceptron (MLP) neural network to perform optical character recognition (OCR).
 

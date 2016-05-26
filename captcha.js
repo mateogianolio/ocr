@@ -1,6 +1,8 @@
-(function() {
+(function () {
+  'use strict';
+
   var canvas = require('canvas');
-  
+
   function generate(config, callback) {
     config.size = config.size || 4;
     config.height = config.height || 24;
@@ -10,7 +12,7 @@
     config.text = config.text || ('' + Math.random()).substr(2, config.size);
     config.distortion = config.distortion === undefined ? true : config.distortion;
 
-    var size = Math.round(config.height * .7),
+    var size = Math.round(config.height * 0.7),
         c = new canvas(config.width, config.height),
         context = c.getContext('2d'),
         fonts = config.fonts || ['sans-serif', 'serif'],
@@ -19,10 +21,10 @@
     context.fillStyle = config.background;
     context.fillRect(0, 0, config.width, config.height);
     context.fillStyle = config.color;
-    
+
     for(i = 0; i < config.text.length; i++) {
       context.font = size + 'px ' + fonts[Math.floor(Math.random() * fonts.length)];
-      
+
       if(config.distortion) {
         context.setTransform(
           Math.random() * 0.25 + 1, // scale horizontally
@@ -42,14 +44,14 @@
           config.height - size / 2 // move vertically
         );
       }
-      
+
       context.fillText(config.text.charAt(i), 0, 0);
     }
 
     c.toBuffer(function(error, buffer) {
       if(error)
         throw error;
-      
+
       callback(config.text, buffer);
     });
   }
