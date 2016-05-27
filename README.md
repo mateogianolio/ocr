@@ -39,6 +39,22 @@ console.log('prediction:', prediction.indexOf(Math.max.apply(null, prediction)))
 // will hopefully output 1 if trained with 0-9 :)
 ```
 
+## Usage
+
+Clone this repository. The script is using [canvas](https://www.npmjs.com/package/canvas), so you'll need to install the **Cairo** rendering engine. On OS X, assuming you have [Homebrew](http://brew.sh) installed, this can be done with the following (copied from canvas README):
+
+```bash
+$ brew install cairo jpeg giflib
+```
+
+Then install npm dependencies and test it:
+
+```bash
+$ npm install
+$ node main.js
+$ node test.js
+```
+
 ## Performance
 
 All runs below were performed with a MacBook Pro Retina 13" Early 2015 with 8GB RAM.
