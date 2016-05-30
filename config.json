@@ -5,8 +5,8 @@
     "sans-serif",
     "serif"
   ],
-  "training_set": 20000,
-  "testing_set": 500,
+  "training_set": 2000,
+  "testing_set": 1000,
   "image_size": 16,
   "threshold": 400,
   "network": {
